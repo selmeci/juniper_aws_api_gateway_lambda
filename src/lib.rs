@@ -389,7 +389,6 @@ where
     type Fut = Pin<Box<dyn Future<Output = Result<ApiGatewayProxyResponse, Failure>> + Send>>;
 
     fn call(&mut self, req: ApiGatewayProxyRequest) -> Self::Fut {
-        println!("{:#?}", req);
         let root_node = Arc::clone(&self.root_node);
         let context = Arc::clone(&self.context);
         Box::pin(async move {
