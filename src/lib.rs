@@ -293,7 +293,7 @@ where
     }
 }
 
-pub async fn error(error: FieldError) -> ApiGatewayProxyResponse {
+pub fn error(error: FieldError) -> ApiGatewayProxyResponse {
     let response = juniper_http::GraphQLResponse::error(error);
     let body = serde_json::to_string(&response).unwrap();
     json(StatusCode::BAD_REQUEST, body)
@@ -304,10 +304,7 @@ pub async fn error(error: FieldError) -> ApiGatewayProxyResponse {
 /// This is intended for highly customized integrations and should only
 /// be used as a last resort. For normal juniper use, use the response
 /// from GraphQLRequest::execute_sync(..).
-pub async fn custom(
-    status_code: StatusCode,
-    response: serde_json::Value,
-) -> ApiGatewayProxyResponse {
+pub fn custom(status_code: StatusCode, response: serde_json::Value) -> ApiGatewayProxyResponse {
     let body = serde_json::to_string(&response).unwrap();
     json(status_code, body)
 }
@@ -335,7 +332,7 @@ pub fn graphiql_source(graphql_endpoint_url: &str) -> ApiGatewayProxyResponse {
 }
 
 /// Generate an HTML page containing GraphQL Playground
-pub async fn playground_source(graphql_endpoint_url: &str) -> ApiGatewayProxyResponse {
+pub fn playground_source(graphql_endpoint_url: &str) -> ApiGatewayProxyResponse {
     html(juniper::http::playground::playground_source(
         graphql_endpoint_url,
     ))
