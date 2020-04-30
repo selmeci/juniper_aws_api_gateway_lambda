@@ -109,11 +109,11 @@ where
         QueryT: GraphQLType<S, Context = CtxT>,
         MutationT: GraphQLType<S, Context = CtxT>,
     {
-        match self {
-            &GraphQLBatchRequest::Single(ref request) => {
+        match *self {
+            GraphQLBatchRequest::Single(ref request) => {
                 GraphQLBatchResponse::Single(request.execute(root_node, context))
             }
-            &GraphQLBatchRequest::Batch(ref requests) => GraphQLBatchResponse::Batch(
+            GraphQLBatchRequest::Batch(ref requests) => GraphQLBatchResponse::Batch(
                 requests
                     .iter()
                     .map(|request| request.execute(root_node, context))
@@ -147,11 +147,11 @@ where
     S: ScalarValue,
 {
     fn is_ok(&self) -> bool {
-        match self {
-            &GraphQLBatchResponse::Single(ref response) => response.is_ok(),
-            &GraphQLBatchResponse::Batch(ref responses) => responses
-                .iter()
-                .fold(true, |ok, response| ok && response.is_ok()),
+        match *self {
+            GraphQLBatchResponse::Single(ref response) => response.is_ok(),
+            GraphQLBatchResponse::Batch(ref responses) => {
+                responses.iter().all(|response| response.is_ok())
+            }
         }
     }
 }
@@ -172,7 +172,7 @@ fn response(
     ApiGatewayProxyResponse {
         status_code: status_code.as_u16() as i64,
         multi_value_headers: HashMap::with_capacity(0),
-        headers: hashmap! {header::CONTENT_TYPE.to_string() => content_type},
+        headers: hashmap! {header::CONTENT_TYPE.to_owned().to_string() => content_type},
         is_base64_encoded: Some(false),
         body: Some(body),
     }
