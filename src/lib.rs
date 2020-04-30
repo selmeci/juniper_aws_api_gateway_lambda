@@ -58,6 +58,8 @@ use maplit::hashmap;
 use percent_encoding::percent_decode_str;
 use serde::Deserialize;
 
+static CONTENT_TYPE: header::HeaderName = header::CONTENT_TYPE;
+
 #[derive(Debug, Fail, Eq, PartialEq)]
 pub enum Error {
     #[fail(display = "UnknownMethod")]
@@ -172,7 +174,7 @@ fn response(
     ApiGatewayProxyResponse {
         status_code: status_code.as_u16() as i64,
         multi_value_headers: HashMap::with_capacity(0),
-        headers: hashmap! {header::CONTENT_TYPE.to_owned().to_string() => content_type},
+        headers: hashmap! {CONTENT_TYPE.to_string() => content_type},
         is_base64_encoded: Some(false),
         body: Some(body),
     }
