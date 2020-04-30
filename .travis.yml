@@ -1,0 +1,21 @@
+language: rust
+
+jobs:
+  fast_finish: true
+  include:
+    - name: Check example
+      rust: stable
+      before_install:
+        - rustup component add rustfmt clippy
+      script:
+        - cd examples/api_gateway
+        - cargo clippy --all-features -- -D warnings
+        - cargo fmt -- --check
+    - name: Test lib
+      rust: stable
+      before_install:
+        - rustup component add rustfmt clippy
+      script:
+        - cargo clippy --all-features -- -D warnings
+        - cargo fmt -- --check
+        - cargo test
