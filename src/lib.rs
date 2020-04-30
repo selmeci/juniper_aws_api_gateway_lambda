@@ -369,7 +369,7 @@ where
         match method(&req)? {
             Method::GET => Ok(Self::from_get(&req)?),
             Method::POST => Ok(Self::from_post(&req)?),
-            raw_method => return Err(Error::InvalidMethod(raw_method)),
+            raw_method => Err(Error::InvalidMethod(raw_method)),
         }
     }
 }
