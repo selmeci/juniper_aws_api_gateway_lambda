@@ -6,6 +6,12 @@
 
 This repository contains the [AWS Lambda Runtime][AWS Lambda Runtime] on [AWS Api Gateway][AWS Api Gateway] integration for [Juniper][Juniper], a [GraphQL][GraphQL] implementation for Rust.
 
+## Supported Versions
+
+|    Version     |      Juniper      |
+|:--------------:|:-----------------:|
+|     0.1.X      |       0.14.2      |
+
 ## Documentation
 
 For documentation, including guides and examples, check out [Juniper][Juniper].
