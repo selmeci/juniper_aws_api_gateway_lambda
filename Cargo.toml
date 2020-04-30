@@ -2,7 +2,7 @@
 name = "juniper_aws_api_gateway_lambda"
 version = "0.14.2"
 authors = ["Selmeci <selmeci.roman@gmail.com>"]
-keywords = ["graphql", "juniper", "aws api gateway", 'aws lambda']
+keywords = ["graphql", "juniper", "aws-apigateway", 'aws-lambda']
 description = "Juniper GraphQL integration for AWS API Gateway lambda runtime"
 repository = "https://github.com/selmeci/juniper_aws_api_gateway_lambda"
 edition = "2018"
